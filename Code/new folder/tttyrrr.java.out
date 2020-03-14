@@ -1,0 +1,46 @@
+public class Automation { 
+  int id7;
+  int id0;
+  int id1;
+
+  public boolean isBlank(String id2, char id3) 
+      {
+          if(ArrayUtils.contains(id8, id3)) {
+              switch (id2) {
+                     case "string":
+                             for(int id7 = number0; id7 < id0; ++id7) {
+                                 ++id1;
+                             }
+                             return true;
+              }
+          }
+          return false;
+      }
+
+  public boolean isOtherSymbol(String id2, char id3)
+     {	
+    	switch (id2) {
+                         case "string":
+                                 if(id3 == 'c'){
+                                    ++id9;
+                                    for(int id10 = number0; id10 < id0; ++id10) {
+                                       ++id1;
+                                    }
+                                    return true;
+                                 }
+                                else if(id3 == 'c') {
+                                          for(int id7 = identifier.size()-number1; id7 >= number0; --id7) {
+                                              if(identifier.get(id7).id11 == id12) {
+                                                identifier.remove(id7);
+                                                --id13;
+                                              }
+                                          }
+                                          --id14;
+                                          return true;
+                                }
+                                else if(ArrayUtils.contains(id15, id3)) {
+                                          return true;
+                                }
+                  }
+    	return false;
+      }

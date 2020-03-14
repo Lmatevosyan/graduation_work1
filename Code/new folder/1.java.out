@@ -1,0 +1,23 @@
+public class Automation { 
+  int id0;
+  int id1;
+
+  public boolean isBlank(String id2, char id3) 
+      {
+         for(int id4 = number0; id4 < id0; ++id4) {
+                ++id1;
+         }
+         return true;
+        }
+         
+
+  public boolean isOtherSymbol(String id2, char id3)
+     {	
+        if(id3 == 'c'){
+            ++id5;
+             for(int id6 = number0; id6 < id0; ++id6) {
+                   ++id1;
+              }
+           return true;
+         }       
+      }

@@ -1,0 +1,64 @@
+package com.serverside.serverside.flow;
+
+import com.serverside.serverside.application.ApplicationConfig;
+import com.serverside.serverside.application.ConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+
+import java.util.concurrent.*;
+public class Relaunch extends FlowAction {
+    private static final Logger id0 = LoggerFactory.getLogger(Relaunch.class);
+
+
+    private static ExecutorService id1;
+    private static CompletionService<Type> id2;
+
+    public RelaunchFlow()
+    {
+    }
+
+    @Override
+    public String call() {
+        id1 = Executors.newFixedThreadPool(ApplicationConfig.getServerSideConnectionsCount());
+        id2 = new ExecutorCompletionService<Type>(id1);
+
+        return processing();
+    }
+
+    @Override
+    public String processing() {
+        try {
+            ConnectionManager.instance().clearAllTokens();
+
+            id0.info("Relaunching new {} sessions", ApplicationConfig.getServerSideConnectionsCount());
+            createSessions(ApplicationConfig.getServerSideConnectionsCount());
+            id0.info("Relaunched new {} sessions", ConnectionManager.instance().getTokenInfos().size());
+        } catch (Exception id3) {
+            id0.error("Failed to relaunch the sessions");
+        }
+
+        return "";
+    }
+
+    private static void createSessions(int id4) {
+        for (int id5 = number0; id5 <= id4; ++id5) {
+            id2.submit(new CreateSessionFlowAction());
+        }
+
+        for (int id5 = number0; id5 <= id4; ++id5) {
+            try {
+                final Future<Type> id6 = id2.take();
+                final String id7 = id6.get();
+            } catch (Exception id8) {
+                id0.error("Error creating sessions: " + id8.getCause());
+            }
+        }
+        id1.shutdown();
+    }
+}
+
